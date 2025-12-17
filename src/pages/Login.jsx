@@ -11,6 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
 import { loginSchema } from "@/utils/validation/loginSchema";
+import usePost from "@/hooks/usePost";
+import { api } from "@/api/api";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 const FormInput = ({
   label,
@@ -43,6 +47,20 @@ const FormInput = ({
 };
 
 const Login = () => {
+  const { postData, loading } = usePost(api.login);
+
+  const handleLogin = async (values) => {
+    await postData(values, {
+      onSuccess: (data) => {
+        toast.success(data?.message);
+      },
+      onError: (error) => {
+        const message = error?.response?.data?.message;
+        toast.error(message);
+      },
+    });
+  };
+
   const { errors, handleBlur, handleChange, handleSubmit, touched, values } =
     useFormik({
       initialValues: {
@@ -50,7 +68,10 @@ const Login = () => {
         password: "",
       },
       validationSchema: loginSchema,
-      onSubmit: (values) => console.log("Login submit", values),
+      onSubmit: (values) => {
+        console.log("Login submit", values);
+        handleLogin(values);
+      },
     });
 
   return (
@@ -93,7 +114,7 @@ const Login = () => {
             onClick={handleSubmit}
             className="w-full cursor-pointer"
           >
-            Login
+            {loading ? <Spinner /> : "Login"}
           </Button>
         </CardFooter>
       </Card>
