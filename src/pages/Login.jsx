@@ -11,10 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
 import { loginSchema } from "@/utils/validation/loginSchema";
-import usePost from "@/hooks/usePost";
-import { api } from "@/api/api";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import { useLoginMutation } from "@/services/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/features/auth/authSlice";
 
 const FormInput = ({
   label,
@@ -47,18 +48,18 @@ const FormInput = ({
 };
 
 const Login = () => {
-  const { postData, loading } = usePost(api.login);
+  const [login, { isLoading, isSuccess, error }] = useLoginMutation();
+  const dispatch = useDispatch();
 
   const handleLogin = async (values) => {
-    await postData(values, {
-      onSuccess: (data) => {
-        toast.success(data?.message);
-      },
-      onError: (error) => {
-        const message = error?.response?.data?.message;
-        toast.error(message);
-      },
-    });
+    try {
+      const response = await login(values).unwrap();
+      dispatch(setCredentials(response?.user));
+      toast.success(response.message);
+    } catch (error) {
+      const message = error?.data?.message;
+      toast.error(message);
+    }
   };
 
   const { errors, handleBlur, handleChange, handleSubmit, touched, values } =
@@ -114,7 +115,7 @@ const Login = () => {
             onClick={handleSubmit}
             className="w-full cursor-pointer"
           >
-            {loading ? <Spinner /> : "Login"}
+            {isLoading ? <Spinner /> : "Login"}
           </Button>
         </CardFooter>
       </Card>
