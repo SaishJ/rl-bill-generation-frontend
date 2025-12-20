@@ -114,6 +114,7 @@ const Login = () => {
             type="submit"
             onClick={handleSubmit}
             className="w-full cursor-pointer"
+            disabled={isLoading}
           >
             {isLoading ? <Spinner /> : "Login"}
           </Button>
