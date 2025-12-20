@@ -1,12 +1,16 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router";
+import { selectIsAuthenticated } from "@/features/auth/authSelectors";
 
 const AuthLayout = () => {
-  return (
-    <div className="min-h-screen">
-      <Outlet />
-    </div>
-  );
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default AuthLayout;
