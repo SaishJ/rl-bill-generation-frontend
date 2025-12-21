@@ -1,9 +1,14 @@
+import { selectNongst, selectNongstItems } from "@/features/bill/billSelectors";
 import React from "react";
+import { useSelector } from "react-redux";
 
-const NonGstBillTable = ({ items = [] }) => {
-  const MAX_ROWS = 10;
+const NonGstBillTable = () => {
+  const formData = useSelector(selectNongst);
+  const tableData = useSelector(selectNongstItems);
 
-  const rows = [...items];
+  const MAX_ROWS = 12;
+
+  const rows = [...tableData];
 
   while (rows.length < MAX_ROWS) {
     rows.push({
@@ -13,6 +18,10 @@ const NonGstBillTable = ({ items = [] }) => {
       amount: "",
     });
   }
+
+  const calculateTotal = rows.reduce((acc, curr) => {
+    return acc + curr.qty * curr.rate;
+  }, 0);
 
   return (
     <table className="w-full border border-black mt-3">
@@ -45,8 +54,18 @@ const NonGstBillTable = ({ items = [] }) => {
               {row.description}
             </td>
             <td className="border-r border-black text-center">{row.qty}</td>
-            <td className="border-r border-black text-center">{row.rate}</td>
-            <td className="text-center">{row.amount}</td>
+            <td className="border-r border-black text-center">
+              {row.rate ? `${row.rate}/-` : ""}
+            </td>
+            <td className="text-center">
+              {formData?.autoCalculate
+                ? row.rate
+                  ? `${Number(row.qty * row.rate).toLocaleString("en-IN")}/-`
+                  : ""
+                : index === 0 && formData?.extraAmount
+                ? `${Number(formData?.extraAmount).toLocaleString("en-IN")}/-`
+                : ""}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -67,7 +86,13 @@ const NonGstBillTable = ({ items = [] }) => {
             colSpan={2}
             className="border-t border-black font-normal text-center"
           >
-            {/* ₹ 25,000/- */}
+            {formData?.autoCalculate
+              ? calculateTotal
+                ? `₹ ${Number(calculateTotal).toLocaleString("en-IN")}/-`
+                : ""
+              : formData?.extraAmount
+              ? `₹ ${Number(formData?.extraAmount).toLocaleString("en-IN")}/-`
+              : ""}
           </td>
         </tr>
         <tr>
@@ -78,7 +103,13 @@ const NonGstBillTable = ({ items = [] }) => {
             colSpan={2}
             className="border-t border-black font-normal text-center"
           >
-            {/* ₹ 25,000/- */}
+            {formData?.autoCalculate
+              ? calculateTotal
+                ? `₹ ${Number(calculateTotal).toLocaleString("en-IN")}/-`
+                : ""
+              : formData?.extraAmount
+              ? `₹ ${Number(formData?.extraAmount).toLocaleString("en-IN")}/-`
+              : ""}
           </td>
         </tr>
       </tfoot>

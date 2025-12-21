@@ -30,7 +30,7 @@ const FormInput = ({
 }) => {
   return (
     <div className="grid gap-2 relative">
-      <Label htmlFor="email">{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
         name={id}

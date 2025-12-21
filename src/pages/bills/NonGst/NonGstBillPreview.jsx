@@ -2,8 +2,12 @@ import React, { forwardRef } from "react";
 
 import logo from "@/assets/logo.svg";
 import NonGstBillTable from "./NonGstBillTable";
+import { useSelector } from "react-redux";
+import { selectNongst } from "@/features/bill/billSelectors";
 
 const NonGstBillPreview = forwardRef((props, ref) => {
+  const formData = useSelector(selectNongst);
+
   return (
     <div
       ref={ref}
@@ -35,16 +39,16 @@ const NonGstBillPreview = forwardRef((props, ref) => {
       <div className="mt-[1.8rem] mx-5">
         <div className="mb-2 border border-black flex flex-row">
           <div className="flex-2 p-2">
-            <p>M/s.</p>
-            <p></p>
+            <p>M/s. {formData?.name}</p>
+            <p>{formData?.address}</p>
           </div>
           <div className="border-l-1 border-black flex-1 p-2 flex flex-col gap-2">
-            <p>INVOICE No.:</p>
+            <p>INVOICE No.: {formData?.invoice_no}</p>
             <p>Date:</p>
             <p></p>
           </div>
         </div>
-        <p>Venue:</p>
+        <p>Venue: {formData?.venue}</p>
         <NonGstBillTable />
         <div className="mt-[3rem] flex flex-row items-end justify-between">
           <div>
