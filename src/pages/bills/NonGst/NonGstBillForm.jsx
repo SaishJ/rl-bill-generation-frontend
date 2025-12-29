@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@/components/ui/input";
-import { selectNongst, selectNongstItems } from "@/features/bill/billSelectors";
+import { selectNongst } from "@/features/bill/billSelectors";
 import {
   addNongstItem,
   removeNongstItem,
