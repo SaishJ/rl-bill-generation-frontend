@@ -30,7 +30,7 @@ const FormInput = ({
 }) => {
   return (
     <div className="grid gap-2 relative">
-      <Label htmlFor="email">{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
         name={id}
@@ -114,6 +114,7 @@ const Login = () => {
             type="submit"
             onClick={handleSubmit}
             className="w-full cursor-pointer"
+            disabled={isLoading}
           >
             {isLoading ? <Spinner /> : "Login"}
           </Button>
