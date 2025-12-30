@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "firebase deploy",
+    "build-deploy": "vite build && firebase deploy",
     "lint": "eslint .",
     "preview": "vite preview"
   },
