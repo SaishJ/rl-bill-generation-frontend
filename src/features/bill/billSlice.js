@@ -12,6 +12,20 @@ const initialState = {
     extraAmount: "",
     autoCalculate: true,
   },
+  gst: {
+    name: "",
+    address: "",
+    gst_tin_no: "",
+    invoice_no: "",
+    date: "",
+    state_code: "",
+    venue: "",
+    event_date: "",
+    items: [],
+    amount: "",
+    autoCalculate: true,
+    gst_percentage: 18,
+  },
 };
 
 const billSlice = createSlice({
@@ -36,6 +50,25 @@ const billSlice = createSlice({
     removeNongstItem: (state, action) => {
       state.nongst.items.splice(action.payload, 1);
     },
+    updateGstField: (state, action) => {
+      state.gst[action.payload.field] = action.payload.value;
+    },
+    updateGstItem: (state, action) => {
+      const { index, field, value } = action.payload;
+      state.gst.items[index][field] = value;
+    },
+    addGstItem: (state) => {
+      state.gst.items.push({
+        description: "",
+        hsn: "",
+        qty: "",
+        rate: "",
+        amount: "",
+      });
+    },
+    removeGstItem: (state, action) => {
+      state.gst.items.splice(action.payload, 1);
+    },
   },
 });
 
@@ -44,5 +77,9 @@ export const {
   updateNongstItem,
   addNongstItem,
   removeNongstItem,
+  updateGstField,
+  updateGstItem,
+  addGstItem,
+  removeGstItem,
 } = billSlice.actions;
 export default billSlice.reducer;

@@ -15,12 +15,12 @@ const GenerateBill = () => {
 
   return (
     <>
-      <GenerateBillHeader name={name} billRef={billRef} />
+      <GenerateBillHeader name={name} billRef={billRef} billType={billType} />
       <div className="grid grid-cols-3 gap-4 p-4">
         {billType === "gst" ? (
           <>
             <GstBillForm />
-            <GstBillPreview />
+            <GstBillPreview ref={billRef} />
           </>
         ) : (
           <>
