@@ -68,6 +68,11 @@ const NonGstBillForm = () => {
                 type="number"
               />
               <Input
+                placeholder="Enter date"
+                value={values.date}
+                onChange={(e) => handleChangeValue("date", e.target.value)}
+              />
+              <Input
                 placeholder="Enter venue"
                 value={values.venue}
                 onChange={(e) => handleChangeValue("venue", e.target.value)}

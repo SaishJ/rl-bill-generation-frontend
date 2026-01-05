@@ -1,5 +1,6 @@
 import { selectNongst, selectNongstItems } from "@/features/bill/billSelectors";
-import React from "react";
+import { priceInWords } from "@/utils/constant";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const NonGstBillTable = () => {
@@ -19,9 +20,17 @@ const NonGstBillTable = () => {
     });
   }
 
-  const calculateTotal = rows.reduce((acc, curr) => {
-    return acc + curr.qty * curr.rate;
-  }, 0);
+  const calculatedAmount = useMemo(() => {
+    const calculateTotal = rows.reduce((acc, curr) => {
+      return acc + curr.qty * curr.rate;
+    }, 0);
+
+    const amount = Number(formData?.extraAmount);
+
+    const totalAmount = formData?.autoCalculate ? calculateTotal : amount;
+
+    return { amount, calculateTotal, totalAmount };
+  }, [rows]);
 
   return (
     <table className="w-full border border-black mt-3">
@@ -76,8 +85,12 @@ const NonGstBillTable = () => {
             rowSpan={2}
             className="border-t border-r border-black p-2 align-top"
           >
-            <span className="italic font-semibold px-1">Rupees:</span>
-            <span></span>
+            <span className="italic font-semibold px-1">
+              Rupees:{" "}
+              <span className="font-normal">
+                {priceInWords(calculatedAmount.totalAmount)}
+              </span>
+            </span>
           </td>
           <td className="border-t border-r border-black text-center font-semibold p-1.5">
             Total
@@ -86,13 +99,9 @@ const NonGstBillTable = () => {
             colSpan={2}
             className="border-t border-black font-normal text-center"
           >
-            {formData?.autoCalculate
-              ? calculateTotal
-                ? `₹ ${Number(calculateTotal).toLocaleString("en-IN")}/-`
-                : ""
-              : formData?.extraAmount
-              ? `₹ ${Number(formData?.extraAmount).toLocaleString("en-IN")}/-`
-              : ""}
+            {`\u20B9 ${Number(calculatedAmount?.totalAmount).toLocaleString(
+              "en-IN"
+            )}`}
           </td>
         </tr>
         <tr>
@@ -103,13 +112,9 @@ const NonGstBillTable = () => {
             colSpan={2}
             className="border-t border-black font-normal text-center"
           >
-            {formData?.autoCalculate
-              ? calculateTotal
-                ? `₹ ${Number(calculateTotal).toLocaleString("en-IN")}/-`
-                : ""
-              : formData?.extraAmount
-              ? `₹ ${Number(formData?.extraAmount).toLocaleString("en-IN")}/-`
-              : ""}
+            {`\u20B9 ${Number(calculatedAmount?.totalAmount).toLocaleString(
+              "en-IN"
+            )}`}
           </td>
         </tr>
       </tfoot>

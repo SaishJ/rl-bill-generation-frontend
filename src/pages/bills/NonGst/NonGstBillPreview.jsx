@@ -44,7 +44,7 @@ const NonGstBillPreview = forwardRef((props, ref) => {
           </div>
           <div className="border-l-1 border-black flex-1 p-2 flex flex-col gap-2">
             <p>INVOICE No.: {formData?.invoice_no}</p>
-            <p>Date:</p>
+            <p>Date: {formData?.date}</p>
             <p></p>
           </div>
         </div>
