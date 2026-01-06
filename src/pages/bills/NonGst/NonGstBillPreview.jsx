@@ -54,6 +54,7 @@ const NonGstBillPreview = forwardRef((props, ref) => {
           <div>
             <p>Bank Details:</p>
             <p>Name: Rupesh Kasare.</p>
+            <p>PAN No.: ARVPK5432C</p>
             <p>A/C 20001972170</p>
             <p>IFSC Code: MAHAB0000050</p>
             <p>BANK OF MAHARASHTRA WORLI</p>
