@@ -117,13 +117,6 @@ const GstBillForm = () => {
                   Auto calculate amount (price x quantity)
                 </Label>
               </div>
-              <Input
-                placeholder="Enter HSN"
-                value={values?.items?.hsn}
-                onChange={(e) =>
-                  handleDescriptionValue(0, `hsn`, e.target.value)
-                }
-              />
               <FieldArray name="items">
                 {({ push, remove }) => (
                   <>
@@ -193,6 +186,14 @@ const GstBillForm = () => {
                   </>
                 )}
               </FieldArray>
+              <Input
+                placeholder="Enter HSN"
+                value={values?.items?.hsn}
+                onChange={(e) =>
+                  handleDescriptionValue(0, `hsn`, e.target.value)
+                }
+                disabled={!values.items.length}
+              />
               <Input
                 placeholder="Enter amount"
                 value={values.amount}

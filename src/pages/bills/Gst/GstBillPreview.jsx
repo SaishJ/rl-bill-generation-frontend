@@ -16,8 +16,12 @@ const GstBillPreview = forwardRef((props, ref) => {
     >
       {/* Headers */}
       <div className="relative mt-2 flex flex-col items-center gap-0">
-        <p className="text-[1.1rem] font-semibold text-red-500">TAX INVOICE</p>
-        <p className="text-2xl font-semibold text-red-500">Rupesh Lights</p>
+        <p className="text-[1.1rem] font-semibold text-red-500 underline">
+          TAX INVOICE
+        </p>
+        <p className="header text-[1.6rem] font-semibold text-red-500 leading-8">
+          RUPESH LIGHTS
+        </p>
         <p className="text-sm font-bold italic">
           Everything Lights for Events, Stage Show, Drama, D.J.’s & Music
           Arrange

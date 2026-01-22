@@ -127,3 +127,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.header {
+  font-family: "Times New Roman", Times, serif;
+}
