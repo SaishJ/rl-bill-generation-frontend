@@ -16,10 +16,10 @@ const NonGstBillPreview = forwardRef((props, ref) => {
     >
       {/* Header */}
       <div className="relative">
-        <p className="mt-2 text-center text-2xl font-semibold text-red-500">
+        <p className="header text-center text-[1.6rem] font-semibold text-red-500 leading-0">
           Rupesh Lights
         </p>
-        <p className="text-center text-sm font-bold italic">
+        <p className="mt-4 text-center text-sm font-bold italic">
           Everything Lights for Events, Stage Show, Drama, D.J.’s & Music
           Arrange
         </p>
