@@ -9,6 +9,7 @@ const Login = lazy(() => import("../pages/Login.jsx"));
 const Home = lazy(() => import("../pages/Home.jsx"));
 const Bills = lazy(() => import("../pages/Bills.jsx"));
 const GenerateBill = lazy(() => import("../pages/GenerateBill.jsx"));
+const BillDetails = lazy(() => import("../pages/BillDetails.jsx"));
 
 const router = createBrowserRouter([
   // Unauth route
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/generate-bill",
         Component: GenerateBill,
+      },
+      {
+        path: "/bill/:id",
+        Component: BillDetails,
       },
     ],
   },
